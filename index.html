@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arcam Assassin Corporation BD - Tactical Agency</title>
+    <meta name="description" content="Arcam Assassin Corporation BD - Tactical Deployment & Operative Management Hub. Contracting elite agents across Bangladesh sectors.">
+    <meta name="keywords" content="Arcam Assassin Corporation BD, Arcam Assassins, Tactical Agency BD">
+    <style>
+        :root {
+            --bg-color: #0a0a0d;
+            --card-bg: #14141c;
+            --card-border: #2a2a3a;
+            --accent-color: #e63946;
+            --accent-hover: #c1121f;
+            --text-main: #e0e0e0;
+            --text-muted: #9a9aab;
+            --gold-color: #ffb703;
+            --success-color: #2ecc71;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(180deg, rgba(230, 57, 70, 0.1) 0%, rgba(10, 10, 13, 1) 100%);
+            border-bottom: 2px solid var(--accent-color);
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            color: #fff;
+            font-size: 2.2rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(230, 57, 70, 0.5);
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-top: 5px;
+        }
+
+        .nav-links {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .page-view {
+            display: none;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .page-view.active {
+            display: block;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--card-border);
+            margin-bottom: 25px;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        select, input[type="text"], input[type="number"], input[type="email"], textarea {
+            background-color: #0a0a0d;
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            padding: 10px 14px;
+            border-radius: 4px;
+            outline: none;
+            font-family: inherit;
+        }
+
+        select:focus, input:focus, textarea:focus {
+            border-color: var(--accent-color);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-color);
+            box-shadow: 0 6px 16px rgba(230, 57, 70, 0.2);
+        }
+
+        .status-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .available { background: rgba(46, 204, 113, 0.2); color: var(--success-color); }
+        .on-quest { background: rgba(231, 76, 60, 0.2); color: #e74c3c; }
+
+        .class-tag {
+            display: inline-block;
+            background: #222230;
+            color: var(--accent-color);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .card h3 { color: #fff; font-size: 1.25rem; }
+
+        .stats-list {
+            list-style: none;
+            margin: 12px 0;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        .price {
+            font-size: 1.2rem;
+            color: var(--gold-color);
+            font-weight: bold;
+            margin: 12px 0;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background-color 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn:hover { background-color: var(--accent-hover); }
+        .btn:disabled { background-color: #444; cursor: not-allowed; }
+
+        .btn-secondary {
+            background-color: transparent;
+            border: 1px solid var(--card-border);
+            color: var(--text-muted);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--card-border);
+            color: #fff;
+        }
+
+        .checkout-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+        }
+
+        @media (max-width: 768px) {
+            .checkout-layout { grid-template-columns: 1fr; }
+        }
+
+        .form-section {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .form-section h2 {
+            color: #fff;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+        }
+
+        .payment-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 10px;
+        }
+
+        .payment-radio { display: none; }
+
+        .payment-label {
+            display: block;
+            background: #0a0a0d;
+            border: 1px solid var(--card-border);
+            padding: 12px;
+            text-align: center;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .payment-radio:checked + .payment-label {
+            border-color: var(--accent-color);
+            background: rgba(230, 57, 70, 0.1);
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .summary-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 25px;
+            position: sticky;
+            top: 20px;
+        }
+
+        .summary-card h3 {
+            color: #fff;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 10px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+        }
+
+        .summary-row.total {
+            border-top: 1px solid var(--card-border);
+            padding-top: 15px;
+            margin-top: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--gold-color);
+        }
+
+        .navigation-bar { margin-bottom: 20px; }
+
+        .confirmation-box {
+            text-align: center;
+            background: var(--card-bg);
+            border: 1px solid var(--success-color);
+            padding: 40px 20px;
+            border-radius: 8px;
+        }
+
+        .confirmation-box h2 {
+            color: var(--success-color);
+            margin-bottom: 15px;
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .history-table th, .history-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--card-border);
+            font-size: 0.9rem;
+        }
+
+        .history-table th {
+            background: #1d1d28;
+            color: var(--accent-color);
+            text-transform: uppercase;
+        }
+
+        .status-completed {
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        .status-active {
+            color: var(--gold-color);
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Arcam Assassin Corporation BD</h1>
+        <p>Tactical Deployment & Operative Management Hub</p>
+        <div class="nav-links">
+            <button class="btn btn-secondary" style="width: auto; padding: 6px 16px;" onclick="showPage('view-directory')">Directory</button>
+            <button class="btn btn-secondary" style="width: auto; padding: 6px 16px;" onclick="showPage('view-history')">Contract History</button>
+        </div>
+    </header>
+
+    <!-- PAGE 1: AGENT DIRECTORY -->
+    <div id="view-directory" class="page-view active">
+        <div class="controls">
+            <div class="filter-group">
+                <label for="class-filter">Specialization:</label>
+                <select id="class-filter" onchange="filterGuild()">
+                    <option value="all">All Specialties</option>
+                    <option value="Stealth">Stealth</option>
+                    <option value="Ranged">Ranged</option>
+                    <option value="Infiltration">Infiltration</option>
+                    <option value="Demolitions">Demolitions</option>
+                    <option value="Cyber">Cyber</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <input type="text" id="search-input" placeholder="Search Agent ID..." onkeyup="filterGuild()">
+            </div>
+        </div>
+
+        <div class="grid" id="guild-container">
+            <!-- Dynamically Rendered by JavaScript -->
+        </div>
+    </div>
+
+    <!-- PAGE 2: MISSION DETAILS & PAYMENT FORM -->
+    <div id="view-checkout" class="page-view">
+        <div class="navigation-bar">
+            <button class="btn btn-secondary" style="width: auto; padding: 8px 16px;" onclick="showPage('view-directory')">← Return to Directory</button>
+        </div>
+
+        <form id="mission-form" onsubmit="processContract(event)">
+            <div class="checkout-layout">
+                <div>
+                    <!-- Section 1: Mission Parameters -->
+                    <div class="form-section">
+                        <h2>1. Mission Directives</h2>
+                        <div class="form-group">
+                            <label for="clientName">Contractor ID / Name</label>
+                            <input type="text" id="clientName" required placeholder="e.g., Client Alpha-7">
+                        </div>
+                        <div class="form-group">
+                            <label for="clientEmail">Client Email (For Completion Notice)</label>
+                            <input type="email" id="clientEmail" required placeholder="e.g., client@domain.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="missionLocation">Target Location / Sector</label>
+                            <input type="text" id="missionLocation" required placeholder="e.g., Sector 4 High-Rise">
+                        </div>
+                        <div class="form-group">
+                            <label for="missionDays">Contract Duration (Days)</label>
+                            <input type="number" id="missionDays" min="1" max="30" value="1" required onchange="calculateTotal()">
+                        </div>
+                        <div class="form-group">
+                            <label for="missionDetails">Tactical Parameters & Objectives</label>
+                            <textarea id="missionDetails" rows="4" required placeholder="Specify mission protocols and parameters..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: Payment Options -->
+                    <div class="form-section">
+                        <h2>2. Financial Escrow</h2>
+                        <div class="form-group">
+                            <label>Payment Method</label>
+                            <div class="payment-options">
+                                <div>
+                                    <input type="radio" id="pay-credits" name="paymentMethod" value="Corp Credits" class="payment-radio" checked>
+                                    <label for="pay-credits" class="payment-label">💳 Corp Credits</label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="pay-crypto" name="paymentMethod" value="Encrypted Wallet" class="payment-radio">
+                                    <label for="pay-crypto" class="payment-label">🔐 Encrypted Wallet</label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="pay-vault" name="paymentMethod" value="Bank Wire" class="payment-radio">
+                                    <label for="pay-vault" class="payment-label">🏦 Bank Wire</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="accountRef">Account / Escrow Reference</label>
+                            <input type="text" id="accountRef" required placeholder="e.g., ACC-99401-X">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Summary -->
+                <div>
+                    <div class="summary-card">
+                        <h3>Contract Summary</h3>
+                        <div class="summary-row">
+                            <span>Assigned Agent:</span>
+                            <strong id="summary-name" style="color: #fff;">-</strong>
+                        </div>
+                        <div class="summary-row">
+                            <span>Daily Fee:</span>
+                            <span id="summary-rate">0 BDT</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Duration:</span>
+                            <span id="summary-days">1 Day(s)</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Agency Commission (5%):</span>
+                            <span id="summary-tax">0 BDT</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total Fee:</span>
+                            <span id="summary-total">0 BDT</span>
+                        </div>
+                        <button type="submit" class="btn" style="margin-top: 20px;">Deploy Agent</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- PAGE 3: CONFIRMATION VIEW -->
+    <div id="view-confirmation" class="page-view">
+        <div class="confirmation-box">
+            <h2>📜 Deployment Authorized</h2>
+            <p>Contract logged to agency history records. A confirmation email will be dispatched to your provided address upon mission completion.</p>
+            <p id="confirmation-details" style="margin: 20px 0; color: var(--text-muted);"></p>
+            <button class="btn btn-secondary" style="width: auto; padding: 10px 24px;" onclick="showPage('view-directory')">Return to Directory</button>
+        </div>
+    </div>
+
+    <!-- PAGE 4: CONTRACT HISTORY -->
+    <div id="view-history" class="page-view">
+        <div class="navigation-bar">
+            <h2>Contract Execution History</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Recorded deals, countdowns, and completion statuses.</p>
+        </div>
+        <table class="history-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Agent</th>
+                    <th>Contractor / Email</th>
+                    <th>Sector</th>
+                    <th>Duration</th>
+                    <th>Total Fee</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="history-rows">
+                <!-- Recorded via JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // 25 Agents Dataset
+        const agentsData = [
+            { id: 1, spec: "Stealth", rate: 50000, region: "Dhaka Sector", status: "Available", desc: "Expert in silent infiltration, night ops, and high-security perimeter bypass." },
+            { id: 2, spec: "Ranged", rate: 75000, region: "Chittagong Port", status: "Available", desc: "Long-range precision marksman specializing in perimeter coverage." },
+            { id: 3, spec: "Infiltration", rate: 60000, region: "Sylhet Zone", status: "On Quest", desc: "Master of disguises, biometric bypass, and covert extraction." },
+            { id: 4, spec: "Demolitions", rate: 80000, region: "Dhaka Sector", status: "Available", desc: "Tactical explosive deployment and controlled structural removal." },
+            { id: 5, spec: "Cyber", rate: 90000, region: "Remote / Global", status: "Available", desc: "Digital surveillance, firewall breach, and electronic counter-measures." },
+            { id: 6, spec: "Stealth", rate: 55000, region: "Khulna Zone", status: "Available", desc: "Urban shadow tracking and silent close-quarters operations." },
+            { id: 7, spec: "Ranged", rate: 70000, region: "Rajshahi Sector", status: "On Quest", desc: "Overwatch support specialist using high-caliber optic rifles." },
+            { id: 8, spec: "Infiltration", rate: 65000, region: "Dhaka Sector", status: "Available", desc: "Corporate facility infiltration and asset retrieval expert." },
+            { id: 9, spec: "Demolitions", rate: 85000, region: "Barisal Zone", status: "Available", desc: "Heavy ordnance specialist equipped for heavy fortification destruction." },
+            { id: 10, spec: "Cyber", rate: 95000, region: "Remote / Global", status: "Available", desc: "Network interception, signal jamming, and security system hijacking." },
+            { id: 11, spec: "Stealth", rate: 52000, region: "Rangpur Zone", status: "Available", desc: "Close-range silent ops and quick evasion maneuvers." },
+            { id: 12, spec: "Ranged", rate: 72000, region: "Mymensingh Sector", status: "Available", desc: "Extreme distance reconnaissance and single-target lockdown." },
+            { id: 13, spec: "Infiltration", rate: 62000, region: "Chittagong Port", status: "Available", desc: "Maritime facility access and underwater insertion expert." },
+            { id: 14, spec: "Demolitions", rate: 78000, region: "Dhaka Sector", status: "On Quest", desc: "Breaching charge deployment and tactical area clearing." },
+            { id: 15, spec: "Cyber", rate: 88000, region: "Remote / Global", status: "Available", desc: "Droning specialist handling aerial reconnaissance and hacking." },
+            { id: 16, spec: "Stealth", rate: 58000, region: "Sylhet Zone", status: "Available", desc: "Low-light operation specialist trained in wilderness tracking." },
+            { id: 17, spec: "Ranged", rate: 76000, region: "Dhaka Sector", status: "Available", desc: "Mobile sniper handling fast-moving target intercept." },
+            { id: 18, spec: "Infiltration", rate: 67000, region: "Khulna Zone", status: "Available", desc: "Undercover intelligence gathering and keycard cloning." },
+            { id: 19, spec: "Demolitions", rate: 82000, region: "Rajshahi Sector", status: "Available", desc: "Counter-explosive specialist and heavy tactical breacher." },
+            { id: 20, spec: "Cyber", rate: 92000, region: "Remote / Global", status: "On Quest", desc: "Mainframe breach and real-time security grid disabler." },
+            { id: 21, spec: "Stealth", rate: 51000, region: "Barisal Zone", status: "Available", desc: "Night-vision specialist for night-shift operations." },
+            { id: 22, spec: "Ranged", rate: 74000, region: "Chittagong Port", status: "Available", desc: "Crosswind precision shooter trained for harbor environments." },
+            { id: 23, spec: "Infiltration", rate: 64000, region: "Dhaka Sector", status: "Available", desc: "VIP venue entry and non-lethal target pacification." },
+            { id: 24, spec: "Demolitions", rate: 86000, region: "Rangpur Zone", status: "Available", desc: "Tactical entry charges and explosive hazard disposal." },
+            { id: 25, spec: "Cyber", rate: 98000, region: "Remote / Global", status: "Available", desc: "Elite operative for high-level encrypted systems takeover." }
+        ];
+
+        let selectedMercName = '';
+        let selectedMercRate = 0;
+        let dealHistory = [];
+
+        function renderAgents() {
+            const container = document.getElementById('guild-container');
+            container.innerHTML = '';
+
+            agentsData.forEach(agent => {
+                const isAvailable = agent.status === 'Available';
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.setAttribute('data-class', agent.spec);
+
+                card.innerHTML = `
+                    <div>
+                        <span class="status-badge ${isAvailable ? 'available' : 'on-quest'}">${agent.status}</span>
+                        <div class="class-tag">${agent.spec}</div>
+                        <h3>Agent ${agent.id}</h3>
+                        <p>${agent.desc}</p>
+                        <ul class="stats-list">
+                            <li>📍 <strong>Sector:</strong> ${agent.region}</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="price">${agent.rate.toLocaleString()} BDT / Day</div>
+                        <button class="btn" ${isAvailable ? '' : 'disabled'} 
+                            onclick="goToContractPage('Agent ${agent.id}', ${agent.rate})">
+                            ${isAvailable ? 'Contract Agent' : 'Unavailable'}
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page-view').forEach(view => view.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function goToContractPage(name, rate) {
+            selectedMercName = name;
+            selectedMercRate = rate;
+
+            document.getElementById('summary-name').innerText = name;
+            document.getElementById('summary-rate').innerText = rate.toLocaleString() + ' BDT';
+            
+            calculateTotal();
+            showPage('view-checkout');
+        }
+
+        function calculateTotal() {
+            const daysInput = document.getElementById('missionDays');
+            let days = parseInt(daysInput.value) || 1;
+            
+            if (days < 1) {
+                days = 1;
+                daysInput.value = 1;
+            }
+
+            const subtotal = selectedMercRate * days;
+            const tax = Math.round(subtotal * 0.05);
+            const total = subtotal + tax;
+
+            document.getElementById('summary-days').innerText = days + (days > 1 ? ' Days' : ' Day');
+            document.getElementById('summary-tax').innerText = tax.toLocaleString() + ' BDT';
+            document.getElementById('summary-total').innerText = total.toLocaleString() + ' BDT';
+        }
+
+        function processContract(event) {
+            event.preventDefault();
+
+            const client = document.getElementById('clientName').value;
+            const email = document.getElementById('clientEmail').value;
+            const location = document.getElementById('missionLocation').value;
+            const days = parseInt(document.getElementById('missionDays').value);
+            const total = document.getElementById('summary-total').innerText;
+            const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+
+            // Create record object
+            const record = {
+                id: Date.now(),
+                date: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+                agent: selectedMercName,
+                client: client,
+                email: email,
+                location: location,
+                days: days,
+                total: total,
+                status: 'In Progress (Active)'
+            };
+
+            dealHistory.unshift(record);
+            updateHistoryTable();
+
+            // Display Confirmation
+            document.getElementById('confirmation-details').innerHTML = 
+                `<strong>Assigned Operative:</strong> ${selectedMercName}<br>` +
+                `<strong>Contractor:</strong> ${client} (${email})<br>` +
+                `<strong>Sector Location:</strong> ${location}<br>` +
+                `<strong>Payment Method:</strong> ${paymentMethod} (${total})<br>` +
+                `<span style="color: var(--success-color);">Email notification scheduled upon contract completion.</span>`;
+
+            // Simulate timer for mission completion (scaled: 1 day = 3 seconds for demonstration testing)
+            const simulationDelay = days * 3000; 
+            setTimeout(() => {
+                record.status = 'Completed';
+                updateHistoryTable();
+                // Simulated Email Alert
+                console.log(`[EMAIL DISPATCHED TO: ${email}] Mission Accomplished for ${selectedMercName} at ${location}!`);
+            }, simulationDelay);
+
+            document.getElementById('mission-form').reset();
+            showPage('view-confirmation');
+        }
+
+        function updateHistoryTable() {
+            const tbody = document.getElementById('history-rows');
+            tbody.innerHTML = '';
+
+            if (dealHistory.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color: var(--text-muted);">No recorded contracts yet.</td></tr>`;
+                return;
+            }
+
+            dealHistory.forEach(record => {
+                const tr = document.createElement('tr');
+                const isCompleted = record.status === 'Completed';
+                tr.innerHTML = `
+                    <td>${record.date}</td>
+                    <td><strong>${record.agent}</strong></td>
+                    <td>${record.client}<br><small style="color: var(--text-muted);">${record.email}</small></td>
+                    <td>${record.location}</td>
+                    <td>${record.days} Day(s)</td>
+                    <td style="color: var(--gold-color);">${record.total}</td>
+                    <td><span class="${isCompleted ? 'status-completed' : 'status-active'}">${record.status}</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function filterGuild() {
+            const classFilter = document.getElementById('class-filter').value;
+            const searchValue = document.getElementById('search-input').value.toLowerCase();
+            const cards = document.querySelectorAll('#guild-container .card');
+
+            cards.forEach(card => {
+                const cardClass = card.getAttribute('data-class');
+                const cardTitle = card.querySelector('h3').innerText.toLowerCase();
+
+                const matchesClass = (classFilter === 'all' || cardClass === classFilter);
+                const matchesSearch = cardTitle.includes(searchValue);
+
+                card.style.display = (matchesClass && matchesSearch) ? 'flex' : 'none';
+            });
+        }
+
+        window.onload = function() {
+            renderAgents();
+            updateHistoryTable();
+        };
+    </script>
+</body>
+</html>
