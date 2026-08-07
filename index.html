@@ -707,8 +707,78 @@
             updateHistoryTable();
         };
     </script>
-   <!-- Client Login & CEO Portal -->
-<div id="auth-container" style="max-width: 500px; margin: 30px auto; padding: 20px; border: 1px solid #444; background: #111; color: #fff; border-radius: 8px;">
+ <!-- Arcam Corp Specialized Logo Styling & Logo Insert -->
+<style>
+  /* Base styles to make the provided image act like a logo */
+  .arcam-logo-container {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    /* Increase the width to make the logo and company text larger and clearer */
+    width: 250px; 
+    /* Set a height that preserves the ratio for the central metallic 'A' and company name */
+    height: 100px;
+    background-image: url("https://i.ibb.co/image_5.png"); /* The image you provided */
+    background-size: 100%; /* Scale to fit width, then use positioning and cropping */
+    background-position: 50% 68%; /* Focus on the central 'A' and the big "ARCAM CORPORATION" text */
+    background-repeat: no-repeat;
+    overflow: hidden;
+    filter: drop-shadow(0 0 10px #e63946); /* Match the new red tactical theme */
+    z-index: 10;
+  }
+
+  /* Target and refine visibility of specific elements in your detailed logo */
+  .arcam-logo-container .arcam-text {
+    position: absolute;
+    top: 55%; /* Move the Arcam text further down into the view window */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    color: white; /* Make text readable against the background */
+    font-size: 28px; /* Larger company text */
+    font-weight: bold;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 4px #000;
+  }
+
+  /* Target the "CORPORATION" text and make it smaller */
+  .arcam-logo-container .arcam-corp-text {
+    position: absolute;
+    bottom: 5px; /* Fine-tune its position at the bottom of the logo window */
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255, 255, 255, 0.7); /* Subtle color */
+    font-size: 12px;
+  }
+
+  /* This helps focus on the main red crosshair and globe detail */
+  .arcam-logo-container .globe-detail {
+    position: absolute;
+    top: 60%; /* Re-center to focus on the red globe in the circle */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20%;
+    height: 20%;
+    border-radius: 50%;
+    background-image: url("https://i.ibb.co/image_5.png");
+    background-size: 500%; /* Large zoom for central detail */
+    background-position: 50% 68%; /* Focus on the lower crosshair detail */
+    background-repeat: no-repeat;
+    opacity: 0.9;
+  }
+</style>
+
+<!-- Update your navigation to use the new logo. Replace your old logo tag with this: -->
+<div class="arcam-logo-container">
+  <div class="arcam-text">Arcam</div>
+  <div class="arcam-corp-text">Corporation</div>
+  <div class="globe-detail"></div>
+</div>
+
+<hr style="border-color: #333; margin: 40px 0;" />
+
+<!-- Standard Client Login & CEO Portal Code Below -->
+<div id="auth-container" style="max-width: 500px; margin: 30px auto; padding: 20px; border: 1px solid #444; background: #111; color: #fff; border-radius: 8px; z-index: 5;">
   <h3 style="margin-top: 0;">Client Account Access</h3>
   
   <form id="signup-form" style="margin-bottom: 20px;">
