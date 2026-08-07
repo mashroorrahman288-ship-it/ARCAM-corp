@@ -707,5 +707,112 @@
             updateHistoryTable();
         };
     </script>
+   <!-- Client Login & CEO Portal -->
+<div id="auth-container" style="max-width: 500px; margin: 30px auto; padding: 20px; border: 1px solid #444; background: #111; color: #fff; border-radius: 8px;">
+  <h3 style="margin-top: 0;">Client Account Access</h3>
+  
+  <form id="signup-form" style="margin-bottom: 20px;">
+    <h4>Create Account</h4>
+    <input type="email" id="signup-email" placeholder="Your Email" required style="width: 100%; padding: 8px; margin-bottom: 8px; box-sizing: border-box;" />
+    <input type="password" id="signup-password" placeholder="Create Password" required style="width: 100%; padding: 8px; margin-bottom: 8px; box-sizing: border-box;" />
+    <button type="submit" style="width: 100%; padding: 10px; background: #28a745; color: #fff; border: none; cursor: pointer; border-radius: 4px;">Register</button>
+  </form>
+
+  <hr style="border-color: #333;" />
+
+  <form id="login-form" style="margin-top: 20px;">
+    <h4>Sign In</h4>
+    <input type="email" id="login-email" placeholder="Your Email" required style="width: 100%; padding: 8px; margin-bottom: 8px; box-sizing: border-box;" />
+    <input type="password" id="login-password" placeholder="Your Password" required style="width: 100%; padding: 8px; margin-bottom: 8px; box-sizing: border-box;" />
+    <button type="submit" style="width: 100%; padding: 10px; background: #007bff; color: #fff; border: none; cursor: pointer; border-radius: 4px;">Sign In</button>
+  </form>
+
+  <button id="logout-btn" style="display: none; width: 100%; padding: 10px; background: #dc3545; color: #fff; border: none; cursor: pointer; border-radius: 4px; margin-top: 15px;">Sign Out</button>
+</div>
+
+<section id="ceo-communication-section" style="display: none; max-width: 600px; margin: 30px auto; padding: 20px; border: 1px solid #007bff; background: #0d1117; color: #fff; border-radius: 8px;">
+  <h2>Direct CEO Communication Channel</h2>
+  <p>Messages submitted here are transmitted directly to the CEO at <strong>mashroorrahman288@gmail.com</strong>.</p>
+
+  <form action="https://formspree.io/f/YOUR_FORMSPREE_CODE" method="POST">
+    <div style="margin-bottom: 12px;">
+      <label for="client-name">Your Name / Title:</label><br>
+      <input type="text" id="client-name" name="name" required style="width: 100%; padding: 8px; box-sizing: border-box;" />
+    </div>
+
+    <div style="margin-bottom: 12px;">
+      <label for="client-email">Your Email Address:</label><br>
+      <input type="email" id="client-email" name="_replyto" required style="width: 100%; padding: 8px; box-sizing: border-box;" />
+    </div>
+
+    <div style="margin-bottom: 12px;">
+      <label for="subject">Subject:</label><br>
+      <input type="text" id="subject" name="_subject" required style="width: 100%; padding: 8px; box-sizing: border-box;" />
+    </div>
+
+    <div style="margin-bottom: 12px;">
+      <label for="message">Direct Message to CEO:</label><br>
+      <textarea id="message" name="message" rows="5" required style="width: 100%; padding: 8px; box-sizing: border-box;"></textarea>
+    </div>
+
+    <button type="submit" style="padding: 10px 20px; background: #e63946; color: white; border: none; cursor: pointer; border-radius: 4px; font-weight: bold;">
+      Send Message to CEO
+    </button>
+  </form>
+</section>
+
+<!-- Firebase Script -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAGmcjh5qBYSntzdtD_hXV-zl-jLSmy-dE",
+    authDomain: "arcam-agency.firebaseapp.com",
+    projectId: "arcam-agency",
+    storageBucket: "arcam-agency.firebasestorage.app",
+    messagingSenderId: "912863765291",
+    appId: "1:912863765291:web:9bb15e9a4bb174aae29b6e"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  document.getElementById('signup-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('signup-email').value;
+    const password = document.getElementById('signup-password').value;
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => alert("Account created successfully! You are now logged in."))
+      .catch((error) => alert(error.message));
+  });
+
+  document.getElementById('login-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => alert("Signed in successfully!"))
+      .catch((error) => alert(error.message));
+  });
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      document.getElementById('signup-form').style.display = 'none';
+      document.getElementById('login-form').style.display = 'none';
+      document.getElementById('logout-btn').style.display = 'block';
+      document.getElementById('ceo-communication-section').style.display = 'block';
+    } else {
+      document.getElementById('signup-form').style.display = 'block';
+      document.getElementById('login-form').style.display = 'block';
+      document.getElementById('logout-btn').style.display = 'none';
+      document.getElementById('ceo-communication-section').style.display = 'none';
+    }
+  });
+
+  document.getElementById('logout-btn').addEventListener('click', () => {
+    signOut(auth).then(() => alert("Logged out successfully."));
+  });
+</script>
 </body>
 </html>
