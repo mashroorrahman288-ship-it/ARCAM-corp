@@ -201,21 +201,7 @@
         <h2>Operative Roster & Ratings</h2>
         <div class="grid" id="agent-roster">
           <!-- Operative cards dynamically updated via JS -->
-          <div class="agent-card">
-            <h3>Operative Vanguard</h3>
-            <span class="badge badge-available">AVAILABLE NOW</span>
-            <div class="rating-stars">★★★★★ (5.0 / 5)</div>
-            <p>Specialty: High-Risk Defense & Tactical Security</p>
-            <button onclick="rateOperative('Vanguard')">Rate Operative</button>
-          </div>
-
-          <div class="agent-card">
-            <h3>Operative Shadow</h3>
-            <span class="badge badge-unavailable">UNAVAILABLE (3 Days Left)</span>
-            <div class="rating-stars">★★★★☆ (4.8 / 5)</div>
-            <p>Specialty: Reconnaissance & Extraction</p>
-            <button disabled style="opacity: 0.5;">Deploy Unavailable</button>
-          </div>
+         
         </div>
       </section>
 
@@ -365,6 +351,40 @@
         alert("Please enter a valid number between 1 and 5.");
       }
     }
+    // Generate Array of 30 Agents (Agent 1 to Agent 30)
+const agents = Array.from({ length: 30 }, (_, index) => {
+  const agentNumber = index + 1;
+  const isAvailable = agentNumber % 3 !== 0;
+  return {
+    id: `agent-${agentNumber}`,
+    name: `Agent ${agentNumber}`,
+    statusClass: isAvailable ? "badge-available" : "badge-unavailable",
+    statusText: isAvailable ? "AVAILABLE NOW" : "UNAVAILABLE",
+    rating: (4.0 + (agentNumber % 10) * 0.1).toFixed(1),
+    specialty: "High-Risk Defense & Tactical Security"
+  };
+});
+
+// Display agents on screen
+function renderAgents() {
+  const roster = document.getElementById('agent-roster');
+  if (!roster) return;
+
+  roster.innerHTML = agents.map(agent => `
+    <div class="agent-card">
+      <h3>${agent.name}</h3>
+      <span class="badge ${agent.statusClass}">${agent.statusText}</span>
+      <div class="rating-stars">★★★★★ (${agent.rating} / 5)</div>
+      <p>Specialty: ${agent.specialty}</p>
+      ${agent.statusClass === 'badge-available' 
+        ? `<button onclick="rateOperative('${agent.name}')">Rate Operative</button>` 
+        : `<button disabled style="opacity: 0.5;">Deploy Unavailable</button>`}
+    </div>
+  `).join('');
+}
+
+// Run the display function
+renderAgents();
   </script>
 </body>
 </html>
