@@ -361,11 +361,12 @@ const agents = Array.from({ length: 30 }, (_, index) => {
     statusClass: isAvailable ? "badge-available" : "badge-unavailable",
     statusText: isAvailable ? "AVAILABLE NOW" : "UNAVAILABLE",
     rating: (4.0 + (agentNumber % 10) * 0.1).toFixed(1),
-    specialty: "High-Risk Defense & Tactical Security"
+    specialty: "High-Risk Defense & Tactical Security",
+    rate: 1500 + (agentNumber * 50)
   };
 });
 
-// Display agents on screen
+// Display agents with two buttons: Rate & Contract
 function renderAgents() {
   const roster = document.getElementById('agent-roster');
   if (!roster) return;
@@ -376,11 +377,43 @@ function renderAgents() {
       <span class="badge ${agent.statusClass}">${agent.statusText}</span>
       <div class="rating-stars">★★★★★ (${agent.rating} / 5)</div>
       <p>Specialty: ${agent.specialty}</p>
-      ${agent.statusClass === 'badge-available' 
-        ? `<button onclick="rateOperative('${agent.name}')">Rate Operative</button>` 
-        : `<button disabled style="opacity: 0.5;">Deploy Unavailable</button>`}
+      <p><strong>Rate: $${agent.rate} / mission</strong></p>
+      <div style="display: flex; gap: 8px; margin-top: 10px;">
+        <button onclick="rateOperative('${agent.name}')" style="flex: 1;">Rate Agent</button>
+        ${agent.statusClass === 'badge-available' 
+          ? `<button onclick="openContractModal('${agent.name}', ${agent.rate})" style="flex: 1; background-color: var(--gold-color, #d4af37); color: #000; font-weight: bold;">Contract Agent</button>` 
+          : `<button disabled style="flex: 1; opacity: 0.5;">Unavailable</button>`}
+      </div>
     </div>
   `).join('');
+}
+
+// Function to handle Agent Contracting with Client Info & Payment
+function openContractModal(agentName, agentRate) {
+  const clientName = prompt(`[Contracting ${agentName}]\n\nStep 1 of 3: Enter your full legal name:`);
+  if (!clientName) return;
+
+  const clientContact = prompt(`[Contracting ${agentName}]\n\nStep 2 of 3: Enter your contact email or encrypted handle:`);
+  if (!clientContact) return;
+
+  const paymentMethod = prompt(
+    `[Contracting ${agentName}]\nFee: $${agentRate}\n\nStep 3 of 3: Select Payment Method:\n1. Crypto (BTC/ETH)\n2. Wire Transfer\n3. Credit Card\n\nEnter 1, 2, or 3:`
+  );
+
+  let methodText = "Credit Card";
+  if (paymentMethod === "1") methodText = "Crypto Wallet";
+  if (paymentMethod === "2") methodText = "Wire Transfer";
+
+  if (paymentMethod) {
+    alert(
+      `Contract Confirmed!\n\n` +
+      `Agent: ${agentName}\n` +
+      `Client: ${clientName} (${clientContact})\n` +
+      `Payment Method: ${methodText}\n` +
+      `Total Charged: $${agentRate}\n\n` +
+      `Operative dispatch initialized. Check your secure inbox for key exchange instructions.`
+    );
+  }
 }
 
 // Run the display function
