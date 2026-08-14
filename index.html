@@ -337,11 +337,27 @@
   <!-- Interactive Utility Functions -->
   <script>
     function calculateTransportCost() {
-      const distance = parseFloat(document.getElementById('transport-distance').value) || 0;
-      const ratePerKm = parseFloat(document.getElementById('transport-level').value);
-      const total = distance * ratePerKm;
-      document.getElementById('transport-cost').innerText = '$' + total.toLocaleString('en-US', {minimumFractionDigits: 2});
-    }
+  const distance = parseFloat(document.getElementById('transport-distance').value) || 0;
+  const ratePerKm = parseFloat(document.getElementById('transport-level').value) || 0;
+
+  if (distance <= 0) {
+    alert("Please enter a valid distance in kilometers.");
+    return;
+  }
+
+  const total = distance * ratePerKm;
+
+  // Update the UI price display
+  document.getElementById('transport-cost').innerText = '$' + total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  // Pop up the booking confirmation alert
+  alert(
+    `Transportation Booked Successfully!\n\n` +
+    `Distance: ${distance} km\n` +
+    `Total Fee: $${total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}\n\n` +
+    `Your secure transport team has been dispatched to your location coordinates.`
+  );
+}
 
     function rateOperative(name) {
       const rating = prompt(`Rate operative ${name} from 1 to 5 stars:`);
