@@ -154,6 +154,94 @@
       width: 100%;
       box-sizing: border-box;
     }
+    /* Comm Link Chat Modal */
+.chat-modal {
+  display: none; 
+  position: fixed; 
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.85); 
+  z-index: 1000;
+  justify-content: center; 
+  align-items: center;
+}
+
+.chat-box {
+  width: 90%; 
+  max-width: 450px; 
+  background: #111; 
+  border: 1px solid var(--accent-color, #e63946);
+  border-radius: 8px; 
+  display: flex; 
+  flex-direction: column; 
+  height: 500px;
+  overflow: hidden; 
+  box-shadow: 0 0 20px rgba(230, 57, 70, 0.3);
+}
+
+.chat-header {
+  background: #222; 
+  padding: 12px; 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center;
+  border-bottom: 1px solid #333;
+}
+
+.chat-messages {
+  flex: 1; 
+  padding: 15px; 
+  overflow-y: auto; 
+  display: flex; 
+  flex-direction: column; 
+  gap: 10px;
+}
+
+.msg {
+  max-width: 80%; 
+  padding: 8px 12px; 
+  border-radius: 6px; 
+  font-size: 0.9rem; 
+  line-height: 1.4;
+}
+
+.msg.agent {
+  align-self: flex-start; 
+  background: #222; 
+  color: #00ffcc; 
+  border-left: 3px solid #00ffcc;
+}
+
+.msg.user {
+  align-self: flex-end; 
+  background: var(--accent-color, #e63946); 
+  color: #fff;
+}
+
+.chat-input-area {
+  display: flex; 
+  padding: 10px; 
+  background: #1a1a1a; 
+  border-top: 1px solid #333;
+}
+
+.chat-input-area input {
+  flex: 1; 
+  padding: 8px; 
+  background: #000; 
+  border: 1px solid #444; 
+  color: #fff; 
+  border-radius: 4px;
+}
+
+.chat-input-area button {
+  padding: 8px 15px; 
+  margin-left: 8px; 
+  background: var(--accent-color, #e63946); 
+  color: #fff; 
+  border: none; 
+  border-radius: 4px; 
+  cursor: pointer;
+}
   </style>
 </head>
 <body>
@@ -399,6 +487,7 @@ function renderAgents() {
         ${agent.statusClass === 'badge-available' 
           ? `<button onclick="openContractModal('${agent.name}', ${agent.rate})" style="flex: 1; background-color: var(--gold-color, #d4af37); color: #000; font-weight: bold;">Contract Agent</button>` 
           : `<button disabled style="flex: 1; opacity: 0.5;">Unavailable</button>`}
+          <button onclick="openChat('${agent.name}', '${agent.specialty}')" style="flex: 1; background: #00ffcc; color: #000; font-weight: bold;">Comm Link</button>
       </div>
     </div>
   `).join('');
@@ -434,6 +523,95 @@ function openContractModal(agentName, agentRate) {
 
 // Run the display function
 renderAgents();
+   let currentChatAgent = { name: '', role: '' };
+
+const agentResponses = {
+  default: [
+    "Receiving transmission. State your operational query.",
+    "Comms secured. What are your parameters?",
+    "ARCAM network line stable. Proceed with instructions."
+  ],
+  tech: [
+    "Firewalls bypassed. What intel do you need decrypted?",
+    "Running diagnostic... connection secure. Go ahead.",
+    "Systems optimal. Ready for tactical data transfer."
+  ],
+  field: [
+    "In position. Waiting on authorization.",
+    "Perimeter clear. Speak fast, client.",
+    "Equipment prepped. What's the objective?"
+  ]
+};
+
+function openChat(name, role) {
+  currentChatAgent = { name, role };
+  document.getElementById('chat-agent-name').innerText = `ENCRYPTED COMM: ${name.toUpperCase()}`;
+  
+  const msgContainer = document.getElementById('chat-messages');
+  msgContainer.innerHTML = `
+    <div class="msg agent">
+      [SECURE LINE ESTABLISHED]<br>
+      Greetings. I am Operative ${name} (${role}). How may I assist your operation?
+    </div>
+  `;
+  
+  document.getElementById('chat-modal').style.display = 'flex';
+}
+
+function closeChat() {
+  document.getElementById('chat-modal').style.display = 'none';
+}
+
+function sendChatMessage() {
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text) return;
+
+  const msgContainer = document.getElementById('chat-messages');
+
+  const userMsg = document.createElement('div');
+  userMsg.className = 'msg user';
+  userMsg.innerText = text;
+  msgContainer.appendChild(userMsg);
+
+  input.value = '';
+  msgContainer.scrollTop = msgContainer.scrollHeight;
+
+  setTimeout(() => {
+    let pool = agentResponses.default;
+    const roleLower = currentChatAgent.role.toLowerCase();
+    
+    if (roleLower.includes('tech') || roleLower.includes('intel')) {
+      pool = agentResponses.tech;
+    } else if (roleLower.includes('field') || roleLower.includes('recon') || roleLower.includes('tactical')) {
+      pool = agentResponses.field;
+    }
+
+    const replyText = pool[Math.floor(Math.random() * pool.length)];
+
+    const agentMsg = document.createElement('div');
+    agentMsg.className = 'msg agent';
+    agentMsg.innerText = replyText;
+    msgContainer.appendChild(agentMsg);
+    msgContainer.scrollTop = msgContainer.scrollHeight;
+  }, 700);
+} 
   </script>
+  <!-- Agent Comm Link Modal -->
+<div id="chat-modal" class="chat-modal">
+  <div class="chat-box">
+    <div class="chat-header">
+      <h3 id="chat-agent-name" style="margin:0; color:#fff; font-size:1.1rem;">Agent Comm Link</h3>
+      <button onclick="closeChat()" style="background:none; border:none; color:#fff; font-size:1.2rem; cursor:pointer;">&times;</button>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+      <!-- Messages injected dynamically -->
+    </div>
+    <div class="chat-input-area">
+      <input type="text" id="chat-input" placeholder="Type a secure message..." onkeydown="if(event.key === 'Enter') sendChatMessage()">
+      <button onclick="sendChatMessage()">Send</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
