@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Executive Protection | ARCAM Corp</title>
+  <style>
+    :root {
+      --bg-color: #0a0a0d;
+      --card-bg: #14141c;
+      --card-border: #2a2a3a;
+      --accent-color: #e63946;
+      --text-main: #e0e0e0;
+      --gold-color: #ffb703;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .header-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .back-btn {
+      color: var(--gold-color);
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .tier-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .tier-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .tier-card h3 {
+      color: var(--accent-color);
+      margin-top: 0;
+    }
+
+    .price-tag {
+      font-size: 1.4rem;
+      color: var(--gold-color);
+      font-weight: bold;
+      margin: 15px 0;
+    }
+
+    .book-btn {
+      background: var(--accent-color);
+      color: #fff;
+      border: none;
+      padding: 10px;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header-nav">
+    <h2>ARCAM EXECUTIVE PROTECTION UNIT</h2>
+    <a href="index.html" class="back-btn">&larr; Return to Main Portal</a>
+  </div>
+
+  <p>Select an elite personal defense package based on your current operational threat profile.</p>
+
+  <div class="tier-grid">
+    <!-- Tier 1 -->
+    <div class="tier-card">
+      <div>
+        <h3>Tier I: Discreet Close Protection</h3>
+        <p>Single low-profile specialist for executive transit, private events, and public appearances.</p>
+        <ul>
+          <li>Unarmed / Concealed Carry</li>
+          <li>Route Reconnaissance</li>
+          <li>24/7 Availability</li>
+        </ul>
+      </div>
+      <div>
+        <div class="price-tag">$1,500 / Day</div>
+        <button class="book-btn" onclick="requestPackage('Tier I Discreet Protection', 1500)">Request Escort</button>
+      </div>
+    </div>
+
+    <!-- Tier 2 -->
+    <div class="tier-card">
+      <div>
+        <h3>Tier II: Tactical Escort Team</h3>
+        <p>Three-operator team with an armored SUV for high-threat urban transport and hostile zones.</p>
+        <ul>
+          <li>Class-IV Body Armor</li>
+          <li>Armored Vehicle Convoy</li>
+          <li>Advanced Threat Countermeasures</li>
+        </ul>
+      </div>
+      <div>
+        <div class="price-tag">$5,000 / Day</div>
+        <button class="book-btn" onclick="requestPackage('Tier II Tactical Team', 5000)">Request Escort</button>
+      </div>
+    </div>
+
+    <!-- Tier 3 -->
+    <div class="tier-card">
+      <div>
+        <h3>Tier III: Static Estate Defense</h3>
+        <p>Full perimeter security detail for corporate headquarters, high-value assets, or private residences.</p>
+        <ul>
+          <li>24/7 Perimeter Surveillance</li>
+          <li>K9 Patrol Unit</li>
+          <li>Tactical Command Link</li>
+        </ul>
+      </div>
+      <div>
+        <div class="price-tag">$12,000 / Day</div>
+        <button class="book-btn" onclick="requestPackage('Tier III Estate Defense', 12000)">Request Escort</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function requestPackage(name, price) {
+    const clientName = prompt("Enter Client Name / Organization:");
+    if (!clientName) return;
+
+    const days = prompt("Enter contract duration (days):", "1");
+    if (!days || isNaN(days)) return;
+
+    const total = price * parseInt(days);
+    alert(`[CONTRACT INITIALIZED]\n\nPackage: ${name}\nClient: ${clientName}\nDuration: ${days} Day(s)\nTotal Retainer: $${total.toLocaleString()}\n\nARCAM Command will contact your secure channel for mission briefing.`);
+  }
+</script>
+
+</body>
+</html>
